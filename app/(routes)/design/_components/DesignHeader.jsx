@@ -13,10 +13,11 @@ import {useState} from "react";
 import ImageKit from "imagekit";
 import {useEffect} from "react";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 const DesignHeader = ({DesignInfo}) => {
     // changing name of project
-
+    const router =useRouter()
     // save project of canva in db
     const {canvasEditor} = useCanvasHook()
     // defining the mutation from backend
@@ -63,7 +64,7 @@ const DesignHeader = ({DesignInfo}) => {
                 imagePreview: imageRef?.url, // contains image kit url
                 name: designName
             })
-
+            router.push('/workspace')
             console.log(result)
         }
     }
@@ -89,7 +90,7 @@ const DesignHeader = ({DesignInfo}) => {
             <input onChange={(e) => setDesignName(e.target.value)} value={designName} type="text" placeholder={'Имя проекта'} className='outline-none text-white'/>
             <div className='flex gap-4 items-center'>
 
-                <Link href='/workspace'> <Button onClick={onSave}><Save/>Сохранить проект</Button></Link>
+           <Button onClick={onSave}><Save/>Сохранить проект</Button>
 
                 <Button onClick={() => onExport()}><Download/>Export</Button>
                 <UserButton />
