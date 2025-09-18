@@ -12,9 +12,9 @@ import {CanvasContext} from "@/context/CanvasContext";
 
 const DesignEditor = () => {
     const {designId} = useParams()
-    // getting the data of project for interacting with it
 
-    // returning the data from backend function GetDesing
+
+
     const DesignInfo = useQuery(api.designs.GetDesign, {
         id: designId
     })

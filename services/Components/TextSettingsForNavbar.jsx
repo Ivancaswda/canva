@@ -4,7 +4,7 @@ import {useCanvasHook} from "@/app/(routes)/design/[designId]/page";
 
 import {TextSettingsList} from "@/services/Options";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-import {Trash} from "lucide-react";
+import {PaintBucket, Trash} from "lucide-react";
 
 const TextSettingsForNavbar = () => {
     const {canvasEditor} = useCanvasHook()
@@ -14,6 +14,13 @@ const TextSettingsForNavbar = () => {
             canvasEditor.remove(activeObject)
         }
     }
+    const onChangeColor = (color) => {
+        const activeObject = canvasEditor.getActiveObject();
+        if (activeObject && activeObject.type === "i-text") {
+            activeObject.set("fill", color);
+            canvasEditor.renderAll();
+        }
+    };
 
     return (
         <div className='flex gap-6'>
@@ -28,6 +35,19 @@ const TextSettingsForNavbar = () => {
                     </Popover>
                 </div>
             ))}
+            <div className='hover:scale-105 transition-all cursor-pointer'>
+                <Popover>
+                    <PopoverTrigger asChild>
+                        <PaintBucket/>
+                    </PopoverTrigger>
+                    <PopoverContent> <input
+                        type="color"
+                        onChange={(e) => onChangeColor(e.target.value)}
+                        className="w-20 h-10 cursor-pointer"
+                    /></PopoverContent>
+                </Popover>
+            </div>
+
             <Trash onClick={onDelete} className='hover:scale-105 transition-all cursor-pointer' />
         </div>
     )
